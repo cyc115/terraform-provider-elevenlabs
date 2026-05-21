@@ -21,8 +21,53 @@ from pathlib import Path
 import httpx
 from deepdiff import DeepDiff
 
-# Keys stripped before comparison — they change between live agent and clone/import
-_VOLATILE_TOP = {"agent_id", "name", "created_at_unix_secs", "last_call_time_unix_secs", "access_info"}
+# Top-level keys stripped before comparison
+_VOLATILE_TOP = {
+    "agent_id",
+    "name",
+    "created_at_unix_secs",
+    "last_call_time_unix_secs",
+    "access_info",
+    # Per-agent identity / versioning
+    "version_id",
+    "branch_id",
+    "main_branch_id",
+    # API-managed, not configurable via provider
+    "coaching_settings",
+    "procedure_settings",
+    "metadata",
+    "whatsapp_accounts",
+    "phone_numbers",
+    "workflow",
+    "tags",
+    "trust_context",
+    "smb_metadata",
+    "ban",
+    "procedures",
+    "procedures_enabled",
+    "procedure_settings",
+    "summary_language",
+    "alerting",
+    "safety",
+}
+
+# DeepDiff exclude_paths for non-configurable nested fields
+_EXCLUDE_PATHS = {
+    # Widget settings (not in provider schema)
+    "root['platform_settings']['widget']",
+    # Attached tests (workspace-specific)
+    "root['platform_settings']['testing']",
+    # Built-in tools (API manages, not configurable)
+    "root['conversation_config']['agent']['prompt']['built_in_tools']",
+    # tools array mirrors built_in_tools (redundant representation)
+    "root['conversation_config']['agent']['prompt']['tools']",
+    # TTS suggested audio tags (read-only API field)
+    "root['conversation_config']['tts']['suggested_audio_tags']",
+    # Overrides / workspace_overrides schema (non-configurable)
+    "root['platform_settings']['overrides']",
+    # Language presets (not in provider schema)
+    "root['conversation_config']['language_presets']",
+}
 
 
 def _strip_volatile(obj: dict) -> dict:
@@ -66,7 +111,7 @@ def main() -> None:
     a_stripped = _strip_volatile(a)
     b_stripped = _strip_volatile(b)
 
-    diff = DeepDiff(a_stripped, b_stripped, ignore_order=True)
+    diff = DeepDiff(a_stripped, b_stripped, ignore_order=True, exclude_paths=_EXCLUDE_PATHS)
 
     if diff:
         print("DIFF:", diff.to_json(indent=2))

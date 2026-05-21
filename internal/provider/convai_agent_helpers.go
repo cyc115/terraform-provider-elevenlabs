@@ -141,9 +141,12 @@ func dataToCreateRequest(ctx context.Context, data *ConvAIAgentModel, diags *dia
 					CascadeTimeoutSeconds:    data.PromptCascadeTimeout.ValueFloat64(),
 					EnableParallelToolCalls:  data.PromptEnableParallelToolCalls.ValueBool(),
 					IgnoreDefaultPersonality: data.PromptIgnoreDefaultPersonality.ValueBool(),
-					BackupLLMConfig: &models.BackupLLMConfig{
-						Preference: data.PromptBackupLLMPreference.ValueString(),
-					},
+					BackupLLMConfig: func() *models.BackupLLMConfig {
+						if p := data.PromptBackupLLMPreference.ValueString(); p != "" {
+							return &models.BackupLLMConfig{Preference: p}
+						}
+						return nil
+					}(),
 					RAG: &models.RAGConfig{
 						Enabled:                    data.PromptRAGEnabled.ValueBool(),
 						EmbeddingModel:             data.PromptRAGEmbeddingModel.ValueString(),
