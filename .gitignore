@@ -4,3 +4,4 @@ terraform-provider-elevenlabs
 .terraform/
 *.tfvars
 /tmp/
+/dist/
