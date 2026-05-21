@@ -13,8 +13,8 @@ bash scripts/release/gen-gpg-key.sh
 ```
 
 - Enter your release email address when prompted.
-- When asked for a passphrase, choose one (can be empty for CI simplicity, but non-empty is
-  recommended). **Remember it — you need it in Step 3.**
+- The key is generated **without a passphrase** (`%no-protection`). The private key is
+  protected at rest by GitHub Secrets — no passphrase is the standard HashiCorp pattern for CI.
 - Note the printed fingerprint.
 - This writes two files:
   - `/tmp/elevenlabs-release-public.asc` — public key (upload to registry)
@@ -40,12 +40,8 @@ gh secret list -R cyc115/terraform-provider-elevenlabs
 
 ## Step 3 — Set the `PASSPHRASE` GitHub secret
 
-```bash
-gh secret set PASSPHRASE -R cyc115/terraform-provider-elevenlabs
-# Paste or type your passphrase at the prompt, then press Enter + Ctrl-D
-```
-
-If you chose an empty passphrase in Step 1, still set the secret to an empty string:
+The key generated in Step 1 has no passphrase. Set the secret to an empty string
+(the `crazy-max/ghaction-import-gpg` action still requires the secret to exist):
 
 ```bash
 printf '' | gh secret set PASSPHRASE -R cyc115/terraform-provider-elevenlabs

@@ -2,7 +2,7 @@
 # gen-gpg-key.sh — generate a dedicated GPG key for terraform-provider-elevenlabs releases.
 #
 # Usage:
-#   ./gen-gpg-key.sh              # interactive: prompts for email and passphrase
+#   ./gen-gpg-key.sh              # interactive: prompts for email; generates unprotected key
 #   ./gen-gpg-key.sh --dry-run    # prints the key config that would be used; no key generated
 #
 # Outputs (written to /tmp/):
@@ -67,7 +67,7 @@ if [[ "$DRY_RUN" == "true" ]]; then
 fi
 
 # --- generate key ---
-echo "Generating key (this may take a moment)..."
+echo "Generating key without passphrase (suitable for CI — key is protected by GitHub secrets)..."
 echo "$GPG_BATCH_CONFIG" | gpg --batch --gen-key
 
 # --- find fingerprint of newly generated key ---
