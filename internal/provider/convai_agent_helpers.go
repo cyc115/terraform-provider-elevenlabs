@@ -237,9 +237,6 @@ func toPlatformSettings(ctx context.Context, data *ConvAIAgentModel, diags *diag
 			Entities: []string{},
 		}
 	}
-	if !data.CoachingType.IsNull() && !data.CoachingType.IsUnknown() && data.CoachingType.ValueString() != "" {
-		ps.CoachingSettings = &models.CoachingSettings{Type: data.CoachingType.ValueString()}
-	}
 	return ps
 }
 

@@ -263,8 +263,8 @@ func (r *ConvAIAgentResource) Schema(_ context.Context, _ resource.SchemaRequest
 			"ps_analysis_llm": schema.StringAttribute{Optional: true, Computed: true},
 			"ps_archived":     schema.BoolAttribute{Optional: true, Computed: true},
 
-			// Coaching
-			"coaching_type": schema.StringAttribute{Optional: true, Computed: true},
+			// Coaching (read-only: API sets this; not configurable on create/update)
+			"coaching_type": schema.StringAttribute{Computed: true},
 		},
 	}
 }
