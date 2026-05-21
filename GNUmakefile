@@ -1,4 +1,4 @@
-VERSION   ?= 0.1.0
+VERSION   ?= 0.1.1
 OS        := $(shell go env GOOS)
 ARCH      := $(shell go env GOARCH)
 INSTALL_DIR := $(HOME)/.terraform.d/plugins/registry.terraform.io/cyc115/elevenlabs/$(VERSION)/$(OS)_$(ARCH)
