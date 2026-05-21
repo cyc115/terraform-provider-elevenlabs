@@ -1,15 +1,5 @@
-terraform {
-  required_providers {
-    elevenlabs = {
-      source  = "registry.terraform.io/cyc115/elevenlabs"
-      version = "~> 0.1"
-    }
-  }
-}
-
 provider "elevenlabs" {
-  # Empty string triggers ELEVENLABS_API_KEY env var fallback in the provider
-  api_key = ""
+  api_key = var.elevenlabs_api_key
 }
 
 resource "elevenlabs_convai_agent" "restaurant_clone" {

@@ -1,33 +1,24 @@
-terraform {
-  required_providers {
-    elevenlabs = {
-      source  = "registry.terraform.io/cyc115/elevenlabs"
-      version = "~> 0.1"
-    }
-  }
-}
-
 provider "elevenlabs" {
-  api_key = ""  # falls back to ELEVENLABS_API_KEY env var
+  api_key = var.elevenlabs_api_key
 }
 
-resource "elevenlabs_workspace_webhook" "lifeos_mike_prod" {
-  name        = "lifeos-mike-prod"
-  webhook_url = "https://caller.mikechen.info/webhook/elevenlabs"
-  auth_type   = "hmac"
-  retry_enabled = false
+resource "elevenlabs_workspace_webhook" "main" {
+  name          = var.webhook_name
+  webhook_url   = var.webhook_url
+  auth_type     = "hmac"
+  retry_enabled = true
 }
 
-resource "elevenlabs_convai_phone_number" "lifeos_mike" {
-  phone_number       = "+18166536821"
+resource "elevenlabs_convai_phone_number" "main" {
+  phone_number       = var.phone_number
   telephony_provider = "twilio"
-  label              = "lifeos"
+  label              = var.phone_label
 }
 
 output "webhook_id" {
-  value = elevenlabs_workspace_webhook.lifeos_mike_prod.id
+  value = elevenlabs_workspace_webhook.main.id
 }
 
 output "phone_id" {
-  value = elevenlabs_convai_phone_number.lifeos_mike.id
+  value = elevenlabs_convai_phone_number.main.id
 }
