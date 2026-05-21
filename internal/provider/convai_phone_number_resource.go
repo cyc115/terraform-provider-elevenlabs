@@ -146,9 +146,9 @@ func (r *ConvAIPhoneNumberResource) ImportState(ctx context.Context, req resourc
 	}
 	var data ConvAIPhoneNumberModel
 	phoneToModel(phone, &data)
-	// Twilio credentials unknown after import — acceptable per spec AC-5.
-	data.TwilioAccountSID = types.StringValue("")
-	data.TwilioAuthToken = types.StringValue("")
+	// Twilio credentials not available after import — leave null so plan matches config.
+	data.TwilioAccountSID = types.StringNull()
+	data.TwilioAuthToken = types.StringNull()
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
