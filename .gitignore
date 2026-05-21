@@ -5,3 +5,5 @@ terraform-provider-elevenlabs
 *.tfvars
 /tmp/
 /dist/
+# macOS metadata
+.DS_Store
