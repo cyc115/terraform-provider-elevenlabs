@@ -33,8 +33,9 @@ func (r *ConvAIPhoneNumberResource) Metadata(_ context.Context, req resource.Met
 
 func (r *ConvAIPhoneNumberResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Manages an ElevenLabs ConvAI phone number. Imports an existing Twilio phone number into ElevenLabs for use with ConvAI agents.",
 		Attributes: map[string]schema.Attribute{
-			"id": schema.StringAttribute{Computed: true},
+			"id": schema.StringAttribute{Computed: true, MarkdownDescription: "ElevenLabs phone number ID (assigned on import)."},
 			"phone_number": schema.StringAttribute{
 				Required: true,
 				PlanModifiers: []planmodifier.String{stringplanmodifier.RequiresReplace()},
