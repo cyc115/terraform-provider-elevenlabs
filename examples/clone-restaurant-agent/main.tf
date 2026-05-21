@@ -7,21 +7,21 @@ resource "elevenlabs_convai_agent" "restaurant_clone" {
   tags = []
 
   # ASR
-  asr_quality               = "high"
-  asr_provider              = "scribe_realtime"
+  asr_quality                 = "high"
+  asr_provider                = "scribe_realtime"
   asr_user_input_audio_format = "pcm_16000"
-  asr_keywords              = []
+  asr_keywords                = []
 
   # Turn
-  turn_timeout               = 7.0
+  turn_timeout                  = 7.0
   turn_silence_end_call_timeout = -1.0
-  turn_mode                  = "turn"
-  turn_eagerness             = "normal"
-  turn_model                 = "turn_v2"
-  turn_speculative_turn      = true
-  turn_soft_timeout_seconds  = -1.0
-  turn_soft_timeout_message  = "Hhmmmm...yeah."
-  turn_soft_timeout_use_llm  = false
+  turn_mode                     = "turn"
+  turn_eagerness                = "normal"
+  turn_model                    = "turn_v2"
+  turn_speculative_turn         = true
+  turn_soft_timeout_seconds     = -1.0
+  turn_soft_timeout_message     = "Hhmmmm...yeah."
+  turn_soft_timeout_use_llm     = false
 
   # TTS
   tts_model_id                   = "eleven_v3_conversational"
@@ -173,8 +173,8 @@ resource "elevenlabs_convai_agent" "restaurant_clone" {
   }
 
   # Webhook (post-call)
-  webhook_post_call_id     = var.webhook_post_call_id
-  webhook_events           = ["transcript"]
+  webhook_post_call_id      = var.webhook_post_call_id
+  webhook_events            = ["transcript"]
   webhook_transcript_format = "json"
 
   # Call limits
@@ -183,12 +183,12 @@ resource "elevenlabs_convai_agent" "restaurant_clone" {
   ps_bursting_enabled        = true
 
   # Privacy
-  ps_record_voice               = true
-  ps_retention_days             = -1
-  ps_delete_transcript_and_pii  = false
-  ps_delete_audio               = false
-  ps_zero_retention_mode        = false
-  ps_history_redaction_enabled  = false
+  ps_record_voice              = true
+  ps_retention_days            = -1
+  ps_delete_transcript_and_pii = false
+  ps_delete_audio              = false
+  ps_zero_retention_mode       = false
+  ps_history_redaction_enabled = false
 
   # Guardrails
   ps_guardrails_focus_enabled            = true
