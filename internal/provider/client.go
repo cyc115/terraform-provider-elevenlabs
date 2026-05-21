@@ -152,8 +152,9 @@ func (c *Client) ListPhones(ctx context.Context) ([]models.PhoneNumberResponse, 
 	if err != nil {
 		return nil, err
 	}
-	var resp models.ListPhoneNumbersResponse
-	return resp.PhoneNumbers, json.Unmarshal(data, &resp)
+	// API returns a bare JSON array, not a wrapped object.
+	var phones []models.PhoneNumberResponse
+	return phones, json.Unmarshal(data, &phones)
 }
 
 func (c *Client) GetPhone(ctx context.Context, phoneID string) (*models.PhoneNumberResponse, error) {
