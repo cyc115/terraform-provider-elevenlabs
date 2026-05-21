@@ -7,3 +7,6 @@ terraform-provider-elevenlabs
 /dist/
 # macOS metadata
 .DS_Store
+# Python bytecode (test scripts)
+__pycache__/
+*.pyc
