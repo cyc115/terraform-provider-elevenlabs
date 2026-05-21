@@ -215,6 +215,7 @@ func toPlatformSettings(ctx context.Context, data *ConvAIAgentModel, diags *diag
 			ZeroRetentionMode:      data.PSZeroRetentionMode.ValueBool(),
 		},
 		Guardrails: &models.Guardrails{
+			Version:         "1",
 			Focus:           &models.GuardrailSwitch{IsEnabled: data.PSGuardrailsFocusEnabled.ValueBool()},
 			PromptInjection: &models.GuardrailSwitch{IsEnabled: data.PSGuardrailsPromptInjectionEnabled.ValueBool()},
 			Content: &models.ContentGuardrail{

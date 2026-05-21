@@ -286,9 +286,15 @@ func (r *ConvAIAgentResource) Create(ctx context.Context, req resource.CreateReq
 	if resp.Diagnostics.HasError() {
 		return
 	}
-	agent, err := r.client.CreateAgent(ctx, body)
+	created, err := r.client.CreateAgent(ctx, body)
 	if err != nil {
 		resp.Diagnostics.AddError("create agent", err.Error())
+		return
+	}
+	// Create response only contains agent_id; GET for the full state.
+	agent, err := r.client.GetAgent(ctx, created.AgentID)
+	if err != nil {
+		resp.Diagnostics.AddError("read agent after create", err.Error())
 		return
 	}
 	agentResponseToModel(ctx, agent, &data, &resp.Diagnostics)
