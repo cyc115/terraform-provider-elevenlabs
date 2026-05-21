@@ -23,6 +23,8 @@ terraform apply
 | Name | Description | Required |
 |------|-------------|----------|
 | `elevenlabs_api_key` | ElevenLabs API key (`sk_...`). Also accepted via `ELEVENLABS_API_KEY` env var. | Yes |
+| `agent_name` | Name for the cloned agent (must be unique in workspace) | No (default: `my-restaurant-agent`) |
+| `webhook_post_call_id` | Workspace webhook ID to fire after each call | No (default: `""`) |
 
 ## Drift Detection
 

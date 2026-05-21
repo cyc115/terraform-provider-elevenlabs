@@ -7,3 +7,15 @@ variable "elevenlabs_api_key" {
     error_message = "elevenlabs_api_key must not be empty and must start with 'sk_'."
   }
 }
+
+variable "agent_name" {
+  description = "Name for the cloned ConvAI agent (must be unique within your workspace)"
+  type        = string
+  default     = "my-restaurant-agent"
+}
+
+variable "webhook_post_call_id" {
+  description = "Workspace webhook ID to fire after each call (leave empty to disable)"
+  type        = string
+  default     = ""
+}

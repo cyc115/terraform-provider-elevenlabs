@@ -3,7 +3,7 @@ provider "elevenlabs" {
 }
 
 resource "elevenlabs_convai_agent" "restaurant_clone" {
-  name = "lifeos-restaurant-reservation-tf-clone"
+  name = var.agent_name
   tags = []
 
   # ASR
@@ -173,7 +173,7 @@ resource "elevenlabs_convai_agent" "restaurant_clone" {
   }
 
   # Webhook (post-call)
-  webhook_post_call_id     = "292fda18206f4260a031782dfdc94ec7"
+  webhook_post_call_id     = var.webhook_post_call_id
   webhook_events           = ["transcript"]
   webhook_transcript_format = "json"
 
