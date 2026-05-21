@@ -25,8 +25,13 @@ func (p *ElevenLabsProvider) Metadata(_ context.Context, _ provider.MetadataRequ
 
 func (p *ElevenLabsProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Provider for the [ElevenLabs](https://elevenlabs.io) API. Manages ConvAI agents, workspace webhooks, and phone numbers.",
 		Attributes: map[string]schema.Attribute{
-			"api_key": schema.StringAttribute{Required: true, Sensitive: true},
+			"api_key": schema.StringAttribute{
+				Required:            true,
+				Sensitive:           true,
+				MarkdownDescription: "ElevenLabs API key. Can also be set via the `ELEVENLABS_API_KEY` environment variable.",
+			},
 		},
 	}
 }

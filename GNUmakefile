@@ -4,7 +4,7 @@ ARCH      := $(shell go env GOARCH)
 INSTALL_DIR := $(HOME)/.terraform.d/plugins/registry.terraform.io/cyc115/elevenlabs/$(VERSION)/$(OS)_$(ARCH)
 BINARY    := terraform-provider-elevenlabs
 
-.PHONY: install test lint
+.PHONY: install test lint docs docs-check
 
 install:
 	go build -o $(BINARY) .
@@ -16,3 +16,10 @@ test:
 
 lint:
 	go vet ./...
+
+docs:
+	go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name elevenlabs
+
+docs-check:
+	go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name elevenlabs
+	git diff --exit-code docs/ || (echo "docs/ out of sync — run 'make docs' and commit"; exit 1)

@@ -1,36 +1,53 @@
 # terraform-provider-elevenlabs
 
+![Version](https://img.shields.io/badge/version-0.2.0-blue)
+
 Terraform provider for [ElevenLabs Conversational AI](https://elevenlabs.io/conversational-ai) — agents, webhooks, phone numbers.
 
-## Resources
-
-- `elevenlabs_convai_agent` — full CRUD for ConvAI agents
-- `elevenlabs_workspace_webhook` — workspace-level post-call webhooks
-- `elevenlabs_convai_phone_number` — Twilio phone numbers imported into ElevenLabs
-
-## Dev setup
+## Installation
 
 ```hcl
-# ~/.terraformrc
-provider_installation {
-  dev_overrides {
-    "registry.terraform.io/cyc115/elevenlabs" = "/Users/<you>/.terraform.d/plugins/registry.terraform.io/cyc115/elevenlabs/0.0.1-dev/darwin_arm64"
+terraform {
+  required_providers {
+    elevenlabs = {
+      source  = "cyc115/elevenlabs"
+      version = "~> 0.2"
+    }
   }
-  direct {}
 }
 ```
 
 ```bash
-make install
+terraform init
 ```
 
-## Provider config
+The provider is published at [registry.terraform.io/providers/cyc115/elevenlabs](https://registry.terraform.io/providers/cyc115/elevenlabs).
+
+## Provider configuration
 
 ```hcl
 provider "elevenlabs" {
-  api_key = var.elevenlabs_api_key
+  api_key = var.elevenlabs_api_key   # or set ELEVENLABS_API_KEY env var
 }
 ```
+
+## Resources
+
+- [`elevenlabs_convai_agent`](docs/resources/convai_agent.md) — full CRUD for ConvAI agents
+- [`elevenlabs_workspace_webhook`](docs/resources/workspace_webhook.md) — workspace-level post-call webhooks
+- [`elevenlabs_convai_phone_number`](docs/resources/convai_phone_number.md) — Twilio phone numbers imported into ElevenLabs
+
+See the [docs/](docs/) directory or the [Terraform Registry page](https://registry.terraform.io/providers/cyc115/elevenlabs) for full attribute documentation.
+
+## Examples
+
+See [examples/](examples/) for ready-to-run configurations:
+
+| Example | Description |
+|---------|-------------|
+| [clone-restaurant-agent](examples/clone-restaurant-agent/) | Create a new ConvAI agent |
+| [import-webhook-phone](examples/import-webhook-phone/) | Import webhook + phone into state |
+| [replicate-agent](examples/replicate-agent/) | Replicate an agent configuration |
 
 ## Resource: `elevenlabs_convai_agent`
 
@@ -154,6 +171,30 @@ provider "elevenlabs" {
 | `supports_outbound` | bool (computed) | Outbound call support |
 | `twilio_account_sid` | string (sensitive) | Twilio account SID |
 | `twilio_auth_token` | string (sensitive) | Twilio auth token |
+
+---
+
+## Advanced — local development
+
+To test against a locally built binary before the provider is published (or to use
+a development build after publication):
+
+```hcl
+# ~/.terraformrc
+provider_installation {
+  dev_overrides {
+    "registry.terraform.io/cyc115/elevenlabs" = "/Users/<you>/.terraform.d/plugins/registry.terraform.io/cyc115/elevenlabs/0.1.1/darwin_arm64"
+  }
+  direct {}
+}
+```
+
+```bash
+make install   # builds and installs to the dev_overrides path
+```
+
+> **Note:** When using `dev_overrides`, `terraform init` will skip version locking
+> for this provider. Remove the `dev_overrides` block to use the registry version.
 
 ## License
 

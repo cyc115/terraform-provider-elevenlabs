@@ -144,9 +144,10 @@ func (r *ConvAIAgentResource) Metadata(_ context.Context, req resource.MetadataR
 
 func (r *ConvAIAgentResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Manages an ElevenLabs ConvAI agent. Supports full CRUD including ASR, TTS, LLM prompt, data collection, webhooks, and privacy/guardrail settings.",
 		Attributes: map[string]schema.Attribute{
-			"id":   schema.StringAttribute{Computed: true},
-			"name": schema.StringAttribute{Required: true},
+			"id":   schema.StringAttribute{Computed: true, MarkdownDescription: "ElevenLabs agent ID (assigned on create)."},
+			"name": schema.StringAttribute{Required: true, MarkdownDescription: "Display name for the agent. Must be unique within the workspace."},
 			"tags": schema.ListAttribute{ElementType: types.StringType, Optional: true, Computed: true},
 
 			// ASR

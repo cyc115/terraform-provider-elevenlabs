@@ -31,9 +31,10 @@ func (r *WorkspaceWebhookResource) Metadata(_ context.Context, req resource.Meta
 
 func (r *WorkspaceWebhookResource) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		MarkdownDescription: "Manages an ElevenLabs workspace webhook. Webhooks receive event callbacks (e.g. post-call transcripts) from ElevenLabs.",
 		Attributes: map[string]schema.Attribute{
-			"id":              schema.StringAttribute{Computed: true},
-			"name":            schema.StringAttribute{Required: true},
+			"id":              schema.StringAttribute{Computed: true, MarkdownDescription: "ElevenLabs webhook ID (assigned on create)."},
+			"name":            schema.StringAttribute{Required: true, MarkdownDescription: "Display name for the webhook."},
 			"webhook_url":     schema.StringAttribute{Required: true},
 			"auth_type":       schema.StringAttribute{Optional: true, Computed: true},
 			"retry_enabled":   schema.BoolAttribute{Optional: true, Computed: true},
