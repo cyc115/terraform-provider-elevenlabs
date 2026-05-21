@@ -1,4 +1,6 @@
 # Copy this file to terraform.tfvars and fill in real values.
 # terraform.tfvars is .gitignored — never commit a file containing real secrets.
 
-elevenlabs_api_key = "sk_REPLACE_WITH_YOUR_KEY"
+elevenlabs_api_key   = "sk_REPLACE_WITH_YOUR_KEY"
+agent_name           = "my-restaurant-agent-replica"
+webhook_post_call_id = ""  # optional: paste your workspace webhook ID here
